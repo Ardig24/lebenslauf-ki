@@ -40,9 +40,10 @@ export function isEnvApiKey() {
 
 /**
  * Check if an API key is configured
+ * Always returns true since we use Supabase Edge Function with server-side API key
  */
 export function hasApiKey() {
-    return !!getApiKey();
+    return true;
 }
 
 /**
