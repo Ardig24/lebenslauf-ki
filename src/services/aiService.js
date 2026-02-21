@@ -68,9 +68,11 @@ export async function callOpenAI(messages, options = {}) {
 export async function enhanceContent(userInput, fieldType, userLang, userLangName, context = {}) {
     const systemPrompts = {
         summary: `You are a German CV writing expert. Transform the user's casual description into a professional German CV summary (Profil/Zusammenfassung). Write 2-3 sentences in first person. Use professional German business language. Return JSON: {"german": "The German text", "explanation": "Brief explanation in ${userLangName} of what you wrote"}`,
-        job_description: `You are a German CV writing expert. Transform the user's job description into professional German CV bullet points. Use action verbs, quantify achievements where possible. Return JSON: {"german": "The German text with bullet points", "explanation": "Brief explanation in ${userLangName}"}`,
+        job_description: `You are a German CV writing expert. Transform the user's job description into professional German CV bullet points. Keep it concise - maximum 2-3 short bullet points. Use action verbs, quantify achievements where possible. Return JSON: {"german": "The German text with bullet points", "explanation": "Brief explanation in ${userLangName}"}`,
+        title: `You are a German CV expert. Extract ONLY the job title from the user's input. Remove any company names, durations, or extra details. For example: "Grafikdesigner bei Firma XY für 2 Jahre" should become just "Grafikdesigner". Return JSON: {"german": "Just the job title in German", "explanation": "Brief explanation in ${userLangName}"}`,
         skills: `You are a German CV expert. Format these skills professionally for a German CV. Return JSON: {"german": "Comma-separated skills in German", "explanation": "Brief explanation in ${userLangName}"}`,
         hobbies: `You are a German CV expert. Format these hobbies/interests professionally for a German CV. Capitalize properly, fix grammar, use proper German terms. Return as comma-separated list. Return JSON: {"german": "Comma-separated hobbies in German", "explanation": "Brief explanation in ${userLangName}"}`,
+        languages: `You are a German CV expert. Translate these language names to German. For example: "english" becomes "Englisch", "albanian" becomes "Albanisch", "shqip" becomes "Albanisch". Keep any proficiency levels if provided. Return JSON: {"german": "Comma-separated languages in German", "explanation": "Brief explanation in ${userLangName}"}`,
         default: `You are a German CV writing expert. Improve this text for a professional German CV. Return JSON: {"german": "The improved German text", "explanation": "Brief explanation in ${userLangName}"}`
     };
 
@@ -147,7 +149,7 @@ export async function generateJobDescription(jobTitle, company, userLangName) {
     const messages = [
         {
             role: 'system',
-            content: `You are a German CV writing expert. Generate a professional German job description (3-4 bullet points) for the given position. Use action verbs, be specific. Return JSON: {"german": "The German description with bullet points", "explanation": "Brief explanation in ${userLangName}"}`
+            content: `You are a German CV writing expert. Generate a concise German job description (2-3 SHORT bullet points, each max 15 words) for the given position. Use action verbs, be specific but brief. Return JSON: {"german": "The German description with bullet points", "explanation": "Brief explanation in ${userLangName}"}`
         },
         { role: 'user', content: `Job title: ${jobTitle}\nCompany: ${company || 'a company'}` }
     ];

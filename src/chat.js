@@ -186,7 +186,7 @@ export class ChatEngine {
             { id: 'skills_intro', messages: t.skills_intro, field: 'skills', placeholder: t.placeholder_skills, suggestions: [], sectionLabel: t.section_skills, aiField: 'skills', showSkillButtons: true },
             { id: 'languages_intro', messages: t.languages_intro, field: 'languages', placeholder: t.placeholder_languages, suggestions: [], sectionLabel: t.section_languages, aiField: 'languages' },
             // Certifications
-            { id: 'cert_intro', messages: t.cert_intro, field: 'cert_name', placeholder: t.placeholder_cert_name, suggestions: [t.skip], sectionLabel: t.section_certifications, aiField: 'certification', originalMessages: [...(t.cert_intro || [])] },
+            { id: 'cert_intro', messages: t.cert_intro, field: 'cert_name', placeholder: t.placeholder_cert_name, suggestions: [t.skip], sectionLabel: t.section_certifications, originalMessages: [...(t.cert_intro || [])] },
             { id: 'cert_issuer', messages: [t.cert_issuer_q], field: 'cert_issuer', placeholder: t.placeholder_cert_issuer, suggestions: [] },
             { id: 'cert_date', messages: [t.cert_date_q], field: 'cert_date', placeholder: t.placeholder_cert_date, suggestions: [] },
             { id: 'cert_more', messages: [t.cert_more_q], field: 'cert_more', placeholder: '', suggestions: [t.cert_more_yes, t.cert_more_no], isChoice: true },
@@ -1243,8 +1243,8 @@ export class ChatEngine {
             return;
         }
 
-        // Parse text input
-        this.parseAndSaveLanguages(value);
+        // Parse text input with AI translation
+        await this.parseAndSaveLanguages(value);
         this.advance();
     }
 
@@ -1360,14 +1360,41 @@ export class ChatEngine {
         document.getElementById('btn-send').disabled = true;
     }
 
-    parseAndSaveLanguages(value) {
-        const langs = value.split(',').map(l => l.trim()).filter(Boolean);
-        langs.forEach(lang => {
-            const parts = lang.split('-').map(p => p.trim());
-            const name = parts[0] || lang;
-            const level = parts[1] || 'Gute Kenntnisse';
-            cvStore.addLanguage({ name, level });
-        });
+    async parseAndSaveLanguages(value) {
+        // Use AI to translate language names to German
+        const indicator = this.showEnhancingIndicator();
+        
+        try {
+            const result = await enhanceContentSecure(value, 'languages', this.selectedLang?.code || 'en', this.selectedLang?.name || 'English', {});
+            indicator.remove();
+            
+            // Parse the German result
+            const germanText = result.german || value;
+            const langs = germanText.split(',').map(l => l.trim()).filter(Boolean);
+            
+            langs.forEach(lang => {
+                const parts = lang.split('-').map(p => p.trim());
+                const name = parts[0] || lang;
+                const level = parts[1] || 'Gute Kenntnisse';
+                cvStore.addLanguage({ name, level });
+            });
+            
+            // Show confirmation
+            if (result.explanation) {
+                this.addMessage(result.explanation, 'ai');
+            }
+        } catch (error) {
+            indicator.remove();
+            console.error('Language translation error:', error);
+            // Fallback: save as-is
+            const langs = value.split(',').map(l => l.trim()).filter(Boolean);
+            langs.forEach(lang => {
+                const parts = lang.split('-').map(p => p.trim());
+                const name = parts[0] || lang;
+                const level = parts[1] || 'Gute Kenntnisse';
+                cvStore.addLanguage({ name, level });
+            });
+        }
     }
 
     advance() {

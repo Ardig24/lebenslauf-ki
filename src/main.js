@@ -113,6 +113,9 @@ function setupTemplateSelection() {
     const templateCards = document.querySelectorAll('.template-card');
     const colorOptions = document.querySelectorAll('.color-option');
     
+    // Create mobile toggle button
+    createMobileToggleButton();
+    
     window.addEventListener('chat-completed', () => {
         if (chatPanel) chatPanel.style.display = 'none';
         if (templatePanel) templatePanel.style.display = 'flex';
@@ -121,6 +124,12 @@ function setupTemplateSelection() {
         // Show Export PDF button on template page
         const exportBtn = document.getElementById('btn-export-pdf');
         if (exportBtn) exportBtn.style.display = 'flex';
+        
+        // On mobile, switch to editor view
+        if (window.innerWidth <= 768) {
+            document.body.classList.add('mobile-show-editor');
+            updateMobileToggleButton(true);
+        }
     });
     
     templateCards.forEach(card => {
@@ -346,6 +355,64 @@ async function saveCurrentCv() {
     }
 
     console.log('✅ CV saved to database');
+}
+
+// ============================================
+// Mobile View Toggle
+// ============================================
+
+function createMobileToggleButton() {
+    // Only create on mobile
+    if (window.innerWidth > 768) return;
+    
+    const btn = document.createElement('button');
+    btn.className = 'mobile-view-toggle';
+    btn.id = 'mobile-view-toggle';
+    btn.innerHTML = `
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+        </svg>
+        Lebenslauf ansehen
+    `;
+    btn.style.display = 'none'; // Hidden until CV has content
+    document.body.appendChild(btn);
+    
+    btn.addEventListener('click', toggleMobileView);
+    
+    // Show button when CV has content
+    cvStore.subscribe(() => {
+        const data = cvStore.getData();
+        const hasContent = data.personal?.fullName || data.experience?.length > 0;
+        btn.style.display = hasContent ? 'flex' : 'none';
+    });
+}
+
+function toggleMobileView() {
+    const isShowingEditor = document.body.classList.toggle('mobile-show-editor');
+    updateMobileToggleButton(isShowingEditor);
+}
+
+function updateMobileToggleButton(isShowingEditor) {
+    const btn = document.getElementById('mobile-view-toggle');
+    if (!btn) return;
+    
+    if (isShowingEditor) {
+        btn.innerHTML = `
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            Zurück zum Chat
+        `;
+    } else {
+        btn.innerHTML = `
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
+            Lebenslauf ansehen
+        `;
+    }
 }
 
 // ============================================

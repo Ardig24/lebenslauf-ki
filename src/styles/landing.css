@@ -236,8 +236,17 @@ a {
         padding: 16px;
     }
 
+    .header-actions {
+        display: flex !important;
+    }
+
     .header-actions .btn-ghost {
         display: none;
+    }
+
+    .header-actions .btn-primary {
+        padding: 10px 16px;
+        font-size: 14px;
     }
 }
 

@@ -1125,3 +1125,102 @@ body::before {
   white-space: pre-wrap;
   line-height: 1.6;
 }
+
+/* ============================================
+   Mobile Layout - Chat/Editor Toggle
+   ============================================ */
+
+@media (max-width: 768px) {
+  .app-header {
+    padding: 10px 16px;
+  }
+
+  .app-header .logo-text {
+    font-size: 18px;
+  }
+
+  .header-actions .btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .main-content {
+    flex-direction: column;
+  }
+
+  .chat-panel {
+    width: 100%;
+    min-width: unset;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    flex: 1;
+  }
+
+  .editor-panel {
+    display: none;
+    min-width: unset;
+    width: 100%;
+  }
+
+  .template-panel {
+    display: none !important;
+  }
+
+  .resize-handle {
+    display: none;
+  }
+
+  /* Show editor when CV is complete (controlled by JS) */
+  body.mobile-show-editor .chat-panel {
+    display: none;
+  }
+
+  body.mobile-show-editor .editor-panel {
+    display: flex;
+    flex: 1;
+  }
+
+  body.mobile-show-editor .template-panel {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-height: 40vh;
+    overflow-y: auto;
+    z-index: 100;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  }
+
+  /* Mobile toggle button */
+  .mobile-view-toggle {
+    display: flex;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 200;
+    background: var(--accent-gradient);
+    color: white;
+    border: none;
+    border-radius: var(--radius-full);
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: var(--shadow-lg);
+    cursor: pointer;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .mobile-view-toggle:hover {
+    transform: scale(1.05);
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-view-toggle {
+    display: none !important;
+  }
+}

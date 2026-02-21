@@ -5,6 +5,17 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# Redirect root to landing page (instant, no visible redirect)
+[[redirects]]
+  from = "/"
+  to = "/landing.html"
+  status = 200
+
+[[redirects]]
+  from = "/index.html"
+  to = "/landing.html"
+  status = 301
+
 [[headers]]
   for = "/*"
   [headers.values]
