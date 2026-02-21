@@ -67,13 +67,14 @@ export async function callOpenAI(messages, options = {}) {
  */
 export async function enhanceContent(userInput, fieldType, userLang, userLangName, context = {}) {
     const systemPrompts = {
+        name: `You are a German CV expert. Format this person's name properly with correct capitalization. Just return the properly formatted name, nothing else. Return JSON: {"german": "The properly capitalized name", "explanation": "Brief explanation in ${userLangName}"}`,
         summary: `You are a German CV writing expert. Transform the user's casual description into a professional German CV summary (Profil/Zusammenfassung). Write 2-3 sentences in first person. Use professional German business language. Return JSON: {"german": "The German text", "explanation": "Brief explanation in ${userLangName} of what you wrote"}`,
         job_description: `You are a German CV writing expert. Transform the user's job description into professional German CV bullet points. Keep it concise - maximum 2-3 short bullet points. Use action verbs, quantify achievements where possible. Return JSON: {"german": "The German text with bullet points", "explanation": "Brief explanation in ${userLangName}"}`,
         title: `You are a German CV expert. Extract ONLY the job title from the user's input. Remove any company names, durations, or extra details. For example: "Grafikdesigner bei Firma XY für 2 Jahre" should become just "Grafikdesigner". Return JSON: {"german": "Just the job title in German", "explanation": "Brief explanation in ${userLangName}"}`,
         skills: `You are a German CV expert. Format these skills professionally for a German CV. Return JSON: {"german": "Comma-separated skills in German", "explanation": "Brief explanation in ${userLangName}"}`,
         hobbies: `You are a German CV expert. Format these hobbies/interests professionally for a German CV. Capitalize properly, fix grammar, use proper German terms. Return as comma-separated list. Return JSON: {"german": "Comma-separated hobbies in German", "explanation": "Brief explanation in ${userLangName}"}`,
         languages: `You are a German CV expert. Translate these language names to German. For example: "english" becomes "Englisch", "albanian" becomes "Albanisch", "shqip" becomes "Albanisch". Keep any proficiency levels if provided. Return JSON: {"german": "Comma-separated languages in German", "explanation": "Brief explanation in ${userLangName}"}`,
-        default: `You are a German CV writing expert. Improve this text for a professional German CV. Return JSON: {"german": "The improved German text", "explanation": "Brief explanation in ${userLangName}"}`
+        default: `You are a German CV expert. Format this text properly for a German CV. Keep it simple and concise. Return JSON: {"german": "The formatted text", "explanation": "Brief explanation in ${userLangName}"}`
     };
 
     const systemPrompt = systemPrompts[fieldType] || systemPrompts.default;
