@@ -779,13 +779,25 @@ export class ChatEngine {
                 feedback: feedback, // Pass the user's feedback
             };
 
-            const result = await enhanceContent(
-                originalInput,
-                step.aiField,
-                this.lang,
-                this.langName,
-                context
-            );
+            // Use secure Edge Function if Supabase is configured
+            let result;
+            if (isSupabaseConfigured()) {
+                result = await enhanceContentSecure(
+                    originalInput,
+                    step.aiField,
+                    this.lang,
+                    this.langName,
+                    context
+                );
+            } else {
+                result = await enhanceContent(
+                    originalInput,
+                    step.aiField,
+                    this.lang,
+                    this.langName,
+                    context
+                );
+            }
 
             enhancing.remove();
 
@@ -1026,7 +1038,7 @@ export class ChatEngine {
         const enhancing = this.showEnhancingIndicator();
         
         try {
-            const enhanced = await enhanceContentSecure(
+            const result = await enhanceContentSecure(
                 value,
                 'hobbies',
                 this.lang,
@@ -1036,6 +1048,7 @@ export class ChatEngine {
             enhancing.remove();
             
             // Parse comma-separated hobbies from enhanced text
+            const enhanced = result.german || result;
             const hobbies = enhanced.split(',').map(h => h.trim()).filter(Boolean);
             cvStore.setHobbies(hobbies);
             
