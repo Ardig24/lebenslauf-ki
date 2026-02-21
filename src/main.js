@@ -260,6 +260,9 @@ async function loadExistingCv(cvId, userId) {
     if (data.education) data.education.forEach(edu => cvStore.addEducation(edu));
     if (data.skills) cvStore.setSkills(data.skills);
     if (data.languages) data.languages.forEach(lang => cvStore.addLanguage(lang));
+    if (data.certifications) data.certifications.forEach(cert => cvStore.addCertification(cert));
+    if (data.projects) data.projects.forEach(proj => cvStore.addProject(proj));
+    if (data.hobbies) cvStore.setHobbies(data.hobbies);
     if (data.templateId) cvStore.setTemplate(data.templateId);
     if (data.accentColor) cvStore.setAccentColor(data.accentColor);
 
