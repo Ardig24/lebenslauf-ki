@@ -187,13 +187,13 @@ export class ChatEngine {
             { id: 'languages_intro', messages: t.languages_intro, field: 'languages', placeholder: t.placeholder_languages, suggestions: [], sectionLabel: t.section_languages, aiField: 'languages' },
             // Certifications
             { id: 'cert_intro', messages: t.cert_intro, field: 'cert_name', placeholder: t.placeholder_cert_name, suggestions: [t.skip], sectionLabel: t.section_certifications, aiField: 'certification', originalMessages: [...(t.cert_intro || [])] },
-            { id: 'cert_issuer', messages: [t.cert_issuer_q], field: 'cert_issuer', placeholder: t.placeholder_cert_issuer, suggestions: [] },
+            { id: 'cert_issuer', messages: [t.cert_issuer_q], field: 'cert_issuer', placeholder: t.placeholder_cert_issuer, suggestions: [t.skip], aiField: 'issuer' },
             { id: 'cert_date', messages: [t.cert_date_q], field: 'cert_date', placeholder: t.placeholder_cert_date, suggestions: [] },
             { id: 'cert_more', messages: [t.cert_more_q], field: 'cert_more', placeholder: '', suggestions: [t.cert_more_yes, t.cert_more_no], isChoice: true },
             // Projects
             { id: 'project_intro', messages: t.project_intro, field: 'project_name', placeholder: t.placeholder_project_name, suggestions: [t.skip], sectionLabel: t.section_projects, aiField: 'project', originalMessages: [...(t.project_intro || [])] },
             { id: 'project_desc', messages: [t.project_desc_q], field: 'project_description', placeholder: t.placeholder_project_desc, suggestions: [], aiField: 'project_description', showProjectDescButtons: true },
-            { id: 'project_tech', messages: [t.project_tech_q], field: 'project_tech', placeholder: t.placeholder_project_tech, suggestions: [] },
+            { id: 'project_tech', messages: [t.project_tech_q], field: 'project_tech', placeholder: t.placeholder_project_tech, suggestions: [t.skip], aiField: 'technologies' },
             { id: 'project_more', messages: [t.project_more_q], field: 'project_more', placeholder: '', suggestions: [t.project_more_yes, t.project_more_no], isChoice: true },
             // Hobbies
             { id: 'hobbies_intro', messages: t.hobbies_intro, field: 'hobbies', placeholder: t.placeholder_hobbies, suggestions: [t.skip], sectionLabel: t.section_hobbies, aiField: 'hobbies' },

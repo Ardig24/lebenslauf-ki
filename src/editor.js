@@ -2064,45 +2064,45 @@ export class CVEditor {
     modal.innerHTML = `
       <div class="ai-edit-card">
         <div class="ai-edit-header">
-          <h3>${isGenerateMode ? '✨ AI Generate' : '✨ AI Edit'}: ${sectionTitle}</h3>
+          <h3>${isGenerateMode ? '✨ KI Generieren' : '✨ KI Bearbeiten'}: ${sectionTitle}</h3>
           <button class="ai-edit-close">&times;</button>
         </div>
         <div class="ai-edit-body">
           ${!isGenerateMode ? `
             <div class="ai-edit-current">
-              <label>Current Text:</label>
+              <label>Aktueller Text:</label>
               <div class="ai-edit-preview">${this.escapeHtml(currentContent)}</div>
             </div>
             <div class="ai-edit-input-group">
-              <label>What would you like to change?</label>
-              <textarea class="ai-edit-input" placeholder="e.g., Make it shorter, More professional, Add more details about leadership..."></textarea>
+              <label>Was möchten Sie ändern?</label>
+              <textarea class="ai-edit-input" placeholder="z.B. Kürzer machen, Professioneller formulieren, Mehr Details zu Führungsaufgaben..."></textarea>
             </div>
           ` : `
             <div class="ai-generate-info">
               <div class="ai-generate-icon">✨</div>
-              <p>Let AI generate professional content for this section based on your job information.</p>
+              <p>Lassen Sie die KI professionellen Inhalt für diesen Abschnitt basierend auf Ihren Jobinformationen erstellen.</p>
               ${contextInfo ? `<div class="ai-context-badge">${this.escapeHtml(contextInfo)}</div>` : ''}
             </div>
             <div class="ai-edit-input-group">
-              <label>Any specific details to include? (optional)</label>
-              <textarea class="ai-edit-input" placeholder="e.g., Focus on leadership, Include technical skills, Mention team management..."></textarea>
+              <label>Besondere Details hinzufügen? (optional)</label>
+              <textarea class="ai-edit-input" placeholder="z.B. Fokus auf Führung, Technische Fähigkeiten einbeziehen, Teammanagement erwähnen..."></textarea>
             </div>
           `}
           <div class="ai-edit-result" style="display: none;">
-            <label>AI Suggestion:</label>
+            <label>KI-Vorschlag:</label>
             <div class="ai-edit-suggestion"></div>
           </div>
         </div>
         <div class="ai-edit-footer">
-          <button class="btn btn-ghost ai-edit-cancel">Cancel</button>
+          <button class="btn btn-ghost ai-edit-cancel">Abbrechen</button>
           <button class="btn btn-primary ai-edit-generate">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/>
               <path d="M16 14H8a4 4 0 0 0-4 4v2h16v-2a4 4 0 0 0-4-4z"/>
             </svg>
-            ${isGenerateMode ? 'Generate Content' : 'Generate'}
+            ${isGenerateMode ? 'Inhalt generieren' : 'Generieren'}
           </button>
-          <button class="btn btn-accent ai-edit-apply" style="display: none;">Apply Changes</button>
+          <button class="btn btn-accent ai-edit-apply" style="display: none;">Änderungen übernehmen</button>
         </div>
       </div>
     `;
@@ -2135,7 +2135,7 @@ export class CVEditor {
 
       const generateBtn = modal.querySelector('.ai-edit-generate');
       generateBtn.disabled = true;
-      generateBtn.innerHTML = '<span class="spinner"></span> Generating...';
+      generateBtn.innerHTML = '<span class="spinner"></span> Wird generiert...';
 
       try {
         const result = await this.generateAiEdit(sectionId, currentContent, input, entryId, isGenMode, modal.dataset.contextInfo);
@@ -2144,13 +2144,13 @@ export class CVEditor {
         modal.querySelector('.ai-edit-result').style.display = 'block';
         modal.querySelector('.ai-edit-apply').style.display = 'inline-flex';
         
-        generateBtn.innerHTML = '🔄 Regenerate';
+        generateBtn.innerHTML = '🔄 Neu generieren';
         generateBtn.disabled = false;
       } catch (error) {
         console.error('AI edit failed:', error);
-        modal.querySelector('.ai-edit-suggestion').textContent = '⚠️ Failed to generate. Please try again.';
+        modal.querySelector('.ai-edit-suggestion').textContent = '⚠️ Generierung fehlgeschlagen. Bitte erneut versuchen.';
         modal.querySelector('.ai-edit-result').style.display = 'block';
-        generateBtn.innerHTML = isGenMode ? 'Generate Content' : 'Generate';
+        generateBtn.innerHTML = isGenMode ? 'Inhalt generieren' : 'Generieren';
         generateBtn.disabled = false;
       }
     });
