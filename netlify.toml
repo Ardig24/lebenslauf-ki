@@ -1,11 +1,6 @@
 [build]
-  publish = "."
-  command = "echo 'No build needed - static site'"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+  publish = "dist"
+  command = "npm install && npm run build"
 
 [build.environment]
   NODE_VERSION = "18"
