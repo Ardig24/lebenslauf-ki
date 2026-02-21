@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Erstellen Sie einen schönen, professionellen Lebenslauf mit unserem KI-Assistenten. Mühelos Ihren Lebenslauf erstellen." />
+  <title>Lebenslauf erstellen — KI-gestützter Lebenslauf-Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>" />
+  <link rel="stylesheet" href="/src/styles/toast.css">
+</head>
+
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="app-header">
+      <a href="/dashboard.html" class="logo">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        </div>
+        <span class="logo-text">CV<span class="logo-accent">profi</span></span>
+      </a>
+      <div class="header-actions">
+        <a href="/dashboard.html" class="btn btn-ghost" id="btn-dashboard" title="Meine Dokumente" style="display: none;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          Meine Dokumente
+        </a>
+        <button id="btn-save" class="btn btn-ghost" title="Lebenslauf speichern" style="display: none;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+          Speichern
+        </button>
+        <button id="btn-export-pdf" class="btn btn-accent" title="PDF exportieren" style="display: none;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          PDF exportieren
+        </button>
+        <!-- User Menu -->
+        <div class="user-menu" id="user-menu" style="display: none;">
+          <button class="user-avatar-btn" id="user-avatar" title="Konto">?</button>
+          <div class="user-dropdown">
+            <div class="user-info">
+              <span class="user-name" id="user-name-display">User</span>
+            </div>
+            <div class="dropdown-divider"></div>
+            <a href="/dashboard.html" class="dropdown-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              Meine Dokumente
+            </a>
+            <a href="/settings.html" class="dropdown-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+              Einstellungen
+            </a>
+            <button class="dropdown-item" id="btn-logout">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+              Abmelden
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Left Panel: AI Chat -->
+      <section class="panel chat-panel" id="chat-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <div class="ai-avatar">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a4 4 0 0 1 4 4v2a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z" />
+                <path d="M16 14H8a4 4 0 0 0-4 4v2h16v-2a4 4 0 0 0-4-4z" />
+              </svg>
+            </div>
+            <div>
+              <h2>KI-Assistent</h2>
+              <span class="status-dot"></span>
+              <span class="status-text">Online</span>
+            </div>
+          </div>
+          <button id="btn-restart" class="btn btn-ghost" title="Gespräch neu starten">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+          </button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <!-- Messages will be injected here -->
+        </div>
+        <div class="chat-input-area" id="chat-input-area">
+          <div class="chat-suggestions" id="chat-suggestions"></div>
+          <form id="chat-form" class="chat-form">
+            <input type="text" id="chat-input" class="chat-input" placeholder="Ihre Antwort eingeben..."
+              autocomplete="off" />
+            <button type="submit" class="btn btn-send" id="btn-send">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Template Selection Panel (Hidden initially) -->
+      <section class="panel template-panel" id="template-panel" style="display: none;">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="3" y1="9" x2="21" y2="9"></line>
+              <line x1="9" y1="21" x2="9" y2="9"></line>
+            </svg>
+            <h2>Vorlage wählen</h2>
+          </div>
+        </div>
+        <div class="template-gallery">
+          <div class="template-card active" data-template="modern">
+            <div class="template-preview modern-preview">
+              <div class="tp-header"></div>
+              <div class="tp-content">
+                <div class="tp-line"></div>
+                <div class="tp-line"></div>
+                <div class="tp-line short"></div>
+              </div>
+            </div>
+            <div class="template-info">
+              <h3>Modern</h3>
+              <p>Klar & Minimalistisch</p>
+            </div>
+          </div>
+          <div class="template-card" data-template="klassisch">
+            <div class="template-preview klassisch-preview">
+              <div class="tp-photo"></div>
+              <div class="tp-klassisch-content">
+                <div class="tp-header"></div>
+                <div class="tp-line"></div>
+                <div class="tp-line short"></div>
+              </div>
+            </div>
+            <div class="template-info">
+              <h3>Klassisch</h3>
+              <p>Traditionell mit Foto</p>
+            </div>
+          </div>
+          <div class="template-card" data-template="professional">
+            <div class="template-preview professional-preview">
+              <div class="tp-header"></div>
+              <div class="tp-border"></div>
+              <div class="tp-content">
+                <div class="tp-line"></div>
+                <div class="tp-line"></div>
+                <div class="tp-line short"></div>
+              </div>
+            </div>
+            <div class="template-info">
+              <h3>Professionell</h3>
+              <p>Klassisch & Formell</p>
+            </div>
+          </div>
+          <div class="template-card" data-template="creative">
+            <div class="template-preview creative-preview">
+              <div class="tp-sidebar"></div>
+              <div class="tp-main">
+                <div class="tp-line"></div>
+                <div class="tp-line"></div>
+                <div class="tp-line short"></div>
+              </div>
+            </div>
+            <div class="template-info">
+              <h3>Kreativ</h3>
+              <p>Zweispaltig mit Seitenleiste</p>
+            </div>
+          </div>
+          <div class="template-card" data-template="kompakt">
+            <div class="template-preview kompakt-preview">
+              <div class="tp-kompakt-header"></div>
+              <div class="tp-kompakt-body">
+                <div class="tp-kompakt-main">
+                  <div class="tp-line"></div>
+                  <div class="tp-line short"></div>
+                </div>
+                <div class="tp-kompakt-side"></div>
+              </div>
+            </div>
+            <div class="template-info">
+              <h3>Kompakt</h3>
+              <p>Platzsparend</p>
+            </div>
+          </div>
+          <div class="template-card" data-template="minimalist">
+            <div class="template-preview minimalist-preview">
+              <div class="tp-min-name"></div>
+              <div class="tp-min-line"></div>
+              <div class="tp-content">
+                <div class="tp-line"></div>
+                <div class="tp-line short"></div>
+              </div>
+            </div>
+            <div class="template-info">
+              <h3>Minimalistisch</h3>
+              <p>Ultra Klar</p>
+            </div>
+          </div>
+          <div class="template-card" data-template="executive">
+            <div class="template-preview executive-preview">
+              <div class="tp-exec-header">
+                <div class="tp-exec-name"></div>
+                <div class="tp-exec-contact"></div>
+              </div>
+              <div class="tp-exec-divider"></div>
+              <div class="tp-content">
+                <div class="tp-line"></div>
+                <div class="tp-line"></div>
+              </div>
+            </div>
+            <div class="template-info">
+              <h3>Executive</h3>
+              <p>Führungskräfte</p>
+            </div>
+          </div>
+          <div class="template-card" data-template="tech">
+            <div class="template-preview tech-preview">
+              <div class="tp-tech-header"></div>
+              <div class="tp-tech-body">
+                <div class="tp-tech-main">
+                  <div class="tp-line"></div>
+                  <div class="tp-line short"></div>
+                </div>
+                <div class="tp-tech-skills">
+                  <div class="tp-skill-dot"></div>
+                  <div class="tp-skill-dot"></div>
+                  <div class="tp-skill-dot"></div>
+                </div>
+              </div>
+            </div>
+            <div class="template-info">
+              <h3>Tech</h3>
+              <p>Entwickler & IT</p>
+            </div>
+          </div>
+          <div class="template-card" data-template="elegant">
+            <div class="template-preview elegant-preview">
+              <div class="tp-elegant-border">
+                <div class="tp-elegant-header"></div>
+                <div class="tp-content">
+                  <div class="tp-line"></div>
+                  <div class="tp-line short"></div>
+                </div>
+              </div>
+            </div>
+            <div class="template-info">
+              <h3>Elegant</h3>
+              <p>Anspruchsvoll</p>
+            </div>
+          </div>
+          <div class="template-card" data-template="bold">
+            <div class="template-preview bold-preview">
+              <div class="tp-bold-accent"></div>
+              <div class="tp-bold-content">
+                <div class="tp-bold-name"></div>
+                <div class="tp-line"></div>
+                <div class="tp-line short"></div>
+              </div>
+            </div>
+            <div class="template-info">
+              <h3>Auffällig</h3>
+              <p>Herausstechen</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Color Picker -->
+        <div class="color-picker-section">
+          <div class="color-picker-header">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 2a10 10 0 0 0 0 20 4 4 0 0 0 0-8 2 2 0 0 1 0-4 10 10 0 0 0 0-8z"></path>
+            </svg>
+            <span>Akzentfarbe</span>
+          </div>
+          <div class="color-options">
+            <button class="color-option active" data-color="emerald" style="--color: #059669;" title="Smaragd"></button>
+            <button class="color-option" data-color="blue" style="--color: #2563eb;" title="Blau"></button>
+            <button class="color-option" data-color="purple" style="--color: #7c3aed;" title="Lila"></button>
+            <button class="color-option" data-color="rose" style="--color: #e11d48;" title="Rosa"></button>
+            <button class="color-option" data-color="orange" style="--color: #ea580c;" title="Orange"></button>
+            <button class="color-option" data-color="slate" style="--color: #475569;" title="Schiefer"></button>
+            <button class="color-option" data-color="teal" style="--color: #0d9488;" title="Teal"></button>
+            <button class="color-option" data-color="indigo" style="--color: #4f46e5;" title="Indigo"></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Resize Handle -->
+      <div class="resize-handle" id="resize-handle">
+        <div class="resize-dots">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <!-- Right Panel: CV Editor -->
+      <section class="panel editor-panel" id="editor-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+            <h2>Ihr Lebenslauf</h2>
+          </div>
+          <div class="editor-tabs">
+            <button class="tab active" data-tab="edit" id="tab-edit">Bearbeiten</button>
+            <button class="tab" data-tab="preview" id="tab-preview">Vorschau</button>
+          </div>
+        </div>
+        <div class="editor-content" id="editor-content">
+          <!-- Empty state -->
+          <div class="editor-empty" id="editor-empty">
+            <div class="empty-illustration">
+              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+                stroke-linecap="round" stroke-linejoin="round" opacity="0.3">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+            </div>
+            <h3>Ihr Lebenslauf erscheint hier</h3>
+            <p>Beginnen Sie mit dem KI-Assistenten zu chatten, um Ihren Lebenslauf Schritt für Schritt zu erstellen</p>
+          </div>
+          <!-- CV Sections (hidden initially) -->
+          <div class="cv-document" id="cv-document" style="display: none;">
+          </div>
+        </div>
+        <!-- Preview mode -->
+        <div class="preview-content" id="preview-content" style="display: none;">
+          <div class="cv-preview-page" id="cv-preview-page"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- html2pdf.js for better PDF export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js"></script>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
