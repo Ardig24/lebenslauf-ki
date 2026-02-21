@@ -287,14 +287,21 @@ async function loadExistingCv(cvId, userId) {
         option.classList.toggle('active', option.dataset.color === savedColor);
     });
     
-    // Switch to edit tab
-    if (cvEditor) cvEditor.switchTab('edit');
+    // Switch to edit tab and render all data
+    if (cvEditor) {
+        cvEditor.renderInitialData();
+        cvEditor.switchTab('edit');
+    }
     
     // Show Export PDF button
     const exportBtn = document.getElementById('btn-export-pdf');
     if (exportBtn) exportBtn.style.display = 'flex';
 
-    console.log('✅ CV loaded from database - Editor mode');
+    console.log('✅ CV loaded from database - Editor mode', { 
+        certifications: data.certifications?.length || 0,
+        projects: data.projects?.length || 0,
+        hobbies: data.hobbies?.length || 0
+    });
 }
 
 async function saveCurrentCv() {
