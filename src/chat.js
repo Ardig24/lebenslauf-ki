@@ -488,7 +488,7 @@ export class ChatEngine {
             return;
         }
         
-        // Handle skip for optional sections (certifications, projects, hobbies)
+        // Handle skip for optional sections and fields
         const skipWord = this.t?.skip || 'skip';
         if (value.toLowerCase() === skipWord.toLowerCase()) {
             if (step.field === 'cert_name') {
@@ -499,6 +499,11 @@ export class ChatEngine {
                     this.showCurrentStep();
                     return;
                 }
+            } else if (step.field === 'cert_issuer') {
+                // Skip issuer - just advance to next step (cert_date)
+                this.tempCert.issuer = '';
+                this.advance();
+                return;
             } else if (step.field === 'project_name') {
                 // Skip entire projects section - jump to hobbies
                 const hobbiesIdx = this.steps.findIndex(s => s.id === 'hobbies_intro');
@@ -507,6 +512,11 @@ export class ChatEngine {
                     this.showCurrentStep();
                     return;
                 }
+            } else if (step.field === 'project_tech') {
+                // Skip technologies - just advance to next step (project_more)
+                this.tempProject.technologies = '';
+                this.advance();
+                return;
             } else if (step.field === 'hobbies') {
                 // Skip hobbies - jump to complete
                 const completeIdx = this.steps.findIndex(s => s.id === 'complete');
