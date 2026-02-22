@@ -293,9 +293,17 @@ async function loadExistingCv(cvId, userId) {
         cvEditor.switchTab('edit');
     }
     
-    // Show Export PDF button
+    // Show Export PDF button and Save button
     const exportBtn = document.getElementById('btn-export-pdf');
-    if (exportBtn) exportBtn.style.display = 'flex';
+    const saveBtn = document.getElementById('btn-save');
+    console.log('Export button found:', !!exportBtn, 'Save button found:', !!saveBtn);
+    if (exportBtn) {
+        exportBtn.style.display = 'inline-flex';
+        exportBtn.style.cssText = 'display: inline-flex !important;';
+    }
+    if (saveBtn) {
+        saveBtn.style.display = 'inline-flex';
+    }
 
     console.log('✅ CV loaded from database - Editor mode', { 
         certifications: data.certifications?.length || 0,
