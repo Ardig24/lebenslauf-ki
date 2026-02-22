@@ -289,7 +289,7 @@ async function loadExistingCv(cvId, userId) {
     
     // Switch to edit tab and render all data
     if (cvEditor) {
-        cvEditor.renderInitialData();
+        cvEditor.renderAllSections();
         cvEditor.switchTab('edit');
     }
     
