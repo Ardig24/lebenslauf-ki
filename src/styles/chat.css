@@ -1318,6 +1318,60 @@
 }
 
 /* ============================================
+   Mobile Warning Modal
+   ============================================ */
+
+.mobile-warning-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+}
+
+.mobile-warning-content {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.3s ease-out;
+}
+
+.mobile-warning-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.mobile-warning-content h2 {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.mobile-warning-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    text-align: left;
+    margin-bottom: 24px;
+}
+
+.mobile-warning-btn {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* ============================================
    Mobile Chat Input Adjustments
    ============================================ */
 

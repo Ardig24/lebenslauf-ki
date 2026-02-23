@@ -58,7 +58,40 @@ export class ChatEngine {
 
         this.btnRestart.addEventListener('click', () => this.restart());
 
-        setTimeout(() => this.showLanguageSelection(), 500);
+        // Show mobile warning modal first on phones, then language selection
+        if (window.innerWidth <= 768 && !sessionStorage.getItem('mobile-warning-dismissed')) {
+            this.showMobileWarningModal();
+        } else {
+            setTimeout(() => this.showLanguageSelection(), 500);
+        }
+    }
+
+    showMobileWarningModal() {
+        const modal = document.createElement('div');
+        modal.className = 'mobile-warning-modal';
+        modal.innerHTML = `
+            <div class="mobile-warning-content">
+                <div class="mobile-warning-icon">💻</div>
+                <h2>Für beste Ergebnisse</h2>
+                <p class="mobile-warning-text">
+                    <strong>🇩🇪 Deutsch:</strong> Für die beste Erfahrung empfehlen wir, einen Computer zu verwenden.<br><br>
+                    <strong>🇬🇧 English:</strong> For the best experience, we recommend using a computer.<br><br>
+                    <strong>🇭🇷 Hrvatski:</strong> Za najbolje iskustvo preporučujemo korištenje računala.<br><br>
+                    <strong>🇹🇷 Türkçe:</strong> En iyi deneyim için bilgisayar kullanmanızı öneririz.<br><br>
+                    <strong>🇦🇱 Shqip:</strong> Për përvojën më të mirë, rekomandojmë përdorimin e kompjuterit.
+                </p>
+                <button class="btn btn-accent mobile-warning-btn" id="mobile-warning-continue">
+                    Trotzdem fortfahren / Continue anyway
+                </button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        document.getElementById('mobile-warning-continue').addEventListener('click', () => {
+            sessionStorage.setItem('mobile-warning-dismissed', 'true');
+            modal.remove();
+            setTimeout(() => this.showLanguageSelection(), 300);
+        });
     }
 
     restart() {
