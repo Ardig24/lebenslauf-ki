@@ -1341,4 +1341,15 @@
         height: 44px;
         flex-shrink: 0;
     }
+
+    /* Template cards on mobile */
+    .template-card {
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    .template-grid {
+        padding-bottom: 20px;
+    }
 }

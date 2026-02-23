@@ -411,6 +411,8 @@ body::before {
   display: flex;
   align-items: center;
   gap: 6px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .tab:hover {
