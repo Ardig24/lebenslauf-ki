@@ -91,6 +91,19 @@ function updateUserUI(user) {
 // ============================================
 
 function initializeApp() {
+    // If loading existing CV, hide chat panel immediately before anything renders
+    if (cvIdFromUrl) {
+        const chatPanel = document.getElementById('chat-panel');
+        const templatePanel = document.getElementById('template-panel');
+        if (chatPanel) chatPanel.style.display = 'none';
+        if (templatePanel) templatePanel.style.display = 'flex';
+        
+        // On mobile, add the class immediately
+        if (window.innerWidth <= 768) {
+            document.body.classList.add('mobile-show-editor');
+        }
+    }
+    
     chatEngine = new ChatEngine();
     cvEditor = new CVEditor();
     
@@ -117,6 +130,8 @@ function setupTemplateSelection() {
     createMobileToggleButton();
     
     window.addEventListener('chat-completed', () => {
+        console.log('🎉 chat-completed event fired, window width:', window.innerWidth);
+        
         if (chatPanel) chatPanel.style.display = 'none';
         if (templatePanel) templatePanel.style.display = 'flex';
         if (cvEditor) cvEditor.switchTab('preview');
@@ -127,6 +142,7 @@ function setupTemplateSelection() {
         
         // On mobile, switch to editor view
         if (window.innerWidth <= 768) {
+            console.log('📱 Mobile detected, adding mobile-show-editor class');
             document.body.classList.add('mobile-show-editor');
             updateMobileToggleButton(true);
         }
