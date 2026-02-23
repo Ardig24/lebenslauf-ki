@@ -1454,7 +1454,6 @@
         flex-direction: column;
     }
 
-    .chat-panel,
     .template-panel {
         width: 100%;
         max-width: none;
