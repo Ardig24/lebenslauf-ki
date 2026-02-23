@@ -1202,6 +1202,9 @@ body::before {
   body.mobile-show-editor .editor-panel {
     display: flex !important;
     flex: 1;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 40vh; /* Make room for template panel */
   }
 
   body.mobile-show-editor .template-panel {
@@ -1216,6 +1219,11 @@ body::before {
     background: var(--bg-secondary);
     border-top: 1px solid var(--border);
     box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+    pointer-events: auto;
+  }
+
+  body.mobile-show-editor .template-panel * {
+    pointer-events: auto;
   }
 
   /* Mobile toggle button */
