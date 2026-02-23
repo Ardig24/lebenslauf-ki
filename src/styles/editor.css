@@ -1489,7 +1489,6 @@
         font-size: 13px;
     }
 
-    .chat-panel,
     .template-panel {
         max-height: 40vh;
     }
@@ -1542,7 +1541,6 @@
 }
 
 @media (max-width: 480px) {
-    .chat-panel,
     .template-panel {
         max-height: 35vh;
     }
