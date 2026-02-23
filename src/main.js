@@ -273,6 +273,12 @@ async function loadExistingCv(cvId, userId) {
     if (chatPanel) chatPanel.style.display = 'none';
     if (templatePanel) templatePanel.style.display = 'flex';
     
+    // On mobile, add the class to show editor view
+    if (window.innerWidth <= 768) {
+        document.body.classList.add('mobile-show-editor');
+        updateMobileToggleButton(true);
+    }
+    
     // Update template card UI to show the saved template as active
     const templateCards = document.querySelectorAll('.template-card');
     const savedTemplate = data.templateId || 'modern';

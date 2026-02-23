@@ -1194,11 +1194,11 @@ body::before {
 
   /* Show editor when CV is complete (controlled by JS) */
   body.mobile-show-editor .chat-panel {
-    display: none;
+    display: none !important;
   }
 
   body.mobile-show-editor .editor-panel {
-    display: flex;
+    display: flex !important;
     flex: 1;
   }
 
