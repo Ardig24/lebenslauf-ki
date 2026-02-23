@@ -132,6 +132,11 @@ function setupTemplateSelection() {
     window.addEventListener('chat-completed', () => {
         console.log('🎉 chat-completed event fired, window width:', window.innerWidth);
         
+        // DEBUG: Show alert on mobile to confirm event fired
+        if (window.innerWidth <= 768) {
+            alert('Event fired! Width: ' + window.innerWidth);
+        }
+        
         if (chatPanel) chatPanel.style.display = 'none';
         if (templatePanel) templatePanel.style.display = 'flex';
         if (cvEditor) cvEditor.switchTab('preview');
