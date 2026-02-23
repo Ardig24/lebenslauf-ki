@@ -420,16 +420,25 @@ export class ChatEngine {
 
         const btnContainer = document.createElement('div');
         btnContainer.className = 'chat-next-btn-container';
-        btnContainer.innerHTML = `
-            <button id="btn-next-to-templates" class="btn btn-accent btn-large">
-                ${this.t?.btn_next || 'Next: Choose Template'} →
-            </button>
-        `;
-        chatPanel.appendChild(btnContainer);
-
-        btnContainer.querySelector('#btn-next-to-templates').addEventListener('click', () => {
+        
+        const btn = document.createElement('button');
+        btn.id = 'btn-next-to-templates';
+        btn.className = 'btn btn-accent btn-large';
+        btn.textContent = (this.t?.btn_next || 'Next: Choose Template') + ' →';
+        btn.type = 'button';
+        
+        // Use both onclick and touchend for better mobile support
+        const handleClick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             window.dispatchEvent(new Event('chat-completed'));
-        });
+        };
+        
+        btn.onclick = handleClick;
+        btn.addEventListener('touchend', handleClick, { passive: false });
+        
+        btnContainer.appendChild(btn);
+        chatPanel.appendChild(btnContainer);
     }
 
     handleUserInput() {
