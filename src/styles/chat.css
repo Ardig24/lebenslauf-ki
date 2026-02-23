@@ -1312,3 +1312,29 @@
     justify-content: center;
     gap: 8px;
 }
+
+/* ============================================
+   Mobile Chat Input Adjustments
+   ============================================ */
+
+@media (max-width: 768px) {
+    .chat-input-area {
+        padding: 10px 12px 12px;
+    }
+
+    .chat-form {
+        gap: 6px;
+    }
+
+    .chat-input {
+        padding: 10px 12px;
+        font-size: 16px; /* Prevents iOS zoom on focus */
+        min-width: 0;
+    }
+
+    .btn-send {
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+    }
+}
