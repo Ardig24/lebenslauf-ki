@@ -95,8 +95,13 @@ function initializeApp() {
     if (cvIdFromUrl) {
         const chatPanel = document.getElementById('chat-panel');
         const templatePanel = document.getElementById('template-panel');
+        const exportBtn = document.getElementById('btn-export-pdf');
+        const saveBtn = document.getElementById('btn-save');
+        
         if (chatPanel) chatPanel.style.display = 'none';
         if (templatePanel) templatePanel.style.display = 'flex';
+        if (exportBtn) exportBtn.style.cssText = 'display: inline-flex !important;';
+        if (saveBtn) saveBtn.style.cssText = 'display: inline-flex !important;';
         
         // On mobile, add the class immediately
         if (window.innerWidth <= 768) {
