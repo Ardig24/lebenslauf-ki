@@ -1146,14 +1146,17 @@ body::before {
 
   .main-content {
     flex-direction: column;
+    height: 100%;
   }
 
   .chat-panel {
     width: 100%;
     min-width: unset;
     border-right: none;
-    border-bottom: 1px solid var(--border);
+    border-bottom: none;
     flex: 1;
+    height: 100%;
+    min-height: 0;
   }
 
   .editor-panel {
